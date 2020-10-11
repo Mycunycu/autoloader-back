@@ -9,6 +9,8 @@ import (
 // Config - model environment variables
 type Config struct {
 	Port string
+	DbName string
+	MongoDbURL string
 }
 
 // InitEnv - ...
@@ -23,6 +25,8 @@ func GetConfig() *Config {
 	cfg := &Config {}
 
 	cfg.Port = getEnv("PORT", ":5000")
+	cfg.DbName = getEnv("DBNAME", "autoloader")
+	cfg.MongoDbURL = getEnv("MONGODB_URL", "")
 
 	return cfg
 }
