@@ -12,8 +12,12 @@ import (
 func Run() {
 	r := routes.NewRouter()
 	cfg := config.GetConfig()
-	
-	go log.Fatal(http.ListenAndServe(cfg.Port, r))
 
 	fmt.Printf("Server is running on :%s\n", cfg.Port)
+
+	err := http.ListenAndServe(cfg.Port, r)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 }
