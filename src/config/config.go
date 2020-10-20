@@ -1,15 +1,15 @@
 package config
 
 import (
-	"os"
-	"log"
 	"github.com/joho/godotenv"
+	"log"
+	"os"
 )
 
 // Config - model environment variables
 type Config struct {
-	Port string
-	DbName string
+	Port       string
+	DbName     string
 	MongoDbURL string
 }
 
@@ -22,7 +22,7 @@ func InitEnv() {
 
 // GetConfig - ...
 func GetConfig() *Config {
-	cfg := &Config {}
+	cfg := &Config{}
 
 	cfg.Port = getEnv("PORT", ":5000")
 	cfg.DbName = getEnv("DBNAME", "autoloader")

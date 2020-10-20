@@ -1,9 +1,9 @@
 package main
 
 import (
-	"autoposter/services/mongodb"
-	"autoposter/server"
 	"autoposter/config"
+	"autoposter/server"
+	"autoposter/services/mongodb"
 )
 
 func main() {

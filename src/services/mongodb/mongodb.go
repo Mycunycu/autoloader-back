@@ -1,21 +1,21 @@
 package mongodb
 
 import (
-	"log"
-	"context"
-	"time"
-	"sync"
-	"fmt"
 	"autoposter/config"
+	"context"
+	"fmt"
+	"log"
+	"sync"
+	"time"
 	//"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	//"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-// MongoDataStore - ... 
+// MongoDataStore - ...
 type MongoDataStore struct {
-	db *mongo.Database
+	db     *mongo.Database
 	Client *mongo.Client
 }
 
@@ -58,7 +58,7 @@ func connectToMongo() (*mongo.Database, *mongo.Client) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	
+
 	client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)

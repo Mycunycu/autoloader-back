@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/gorilla/mux"
 	"autoposter/models"
+	"github.com/gorilla/mux"
 )
 
 // NewRouter - creating new Router
