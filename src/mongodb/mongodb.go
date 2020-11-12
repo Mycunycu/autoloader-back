@@ -65,7 +65,7 @@ func connectToMongo() (*mongo.Database, *mongo.Client) {
 	}
 
 	var db = client.Database(cfg.DbName)
-	fmt.Printf("Connectet to DbName: %s\n", cfg.DbName)
+	fmt.Printf("Connected to DbName: %s\n", cfg.DbName)
 
 	return db, client
 }

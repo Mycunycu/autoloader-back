@@ -1,26 +1,21 @@
 package routes
 
 import (
-	"autoposter/models"
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
-// NewRouter - creating new Router
-func NewRouter() *mux.Router {
-	r := mux.NewRouter().StrictSlash(true)
-	return SetupRoute(r)
-}
+// Router - ...
+type Router struct {}
 
-// LoadAllRoutes - ...
-func LoadAllRoutes() []models.Route {
-	routes := userRoutes
-	return routes
-}
-
-// SetupRoute - creating new route with settings
-func SetupRoute(r *mux.Router) *mux.Router {
-	for _, route := range LoadAllRoutes() {
-		r.HandleFunc(route.URL, route.Handler).Methods(route.Method)
+// InitRouter - ...
+func (r *Router) InitRouter() *gin.Engine {
+	router := gin.New()
+	
+	auth := router.Group("/auth", ) 
+	{
+		auth.POST("/sign-up",)
+		auth.POST("/sign-in",)
 	}
-	return r
+
+	return router
 }

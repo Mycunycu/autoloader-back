@@ -8,8 +8,13 @@ import (
 	"net/http"
 )
 
+// Server - ...
+type Server struct {
+	httpServer *http.Server
+}
+
 // Run - running server
-func Run() {
+func (s *Server) Run() error {
 	r := routes.NewRouter()
 	cfg := config.GetConfig()
 
