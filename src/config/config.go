@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/joho/godotenv"
-	"log"
+	"github.com/sirupsen/logrus"
 	"os"
 )
 
@@ -16,7 +16,7 @@ type Config struct {
 // InitEnv - ...
 func InitEnv() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("No .env file found")
+		logrus.Fatal("No .env file found")
 	}
 }
 

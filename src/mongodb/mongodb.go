@@ -4,7 +4,7 @@ import (
 	"autoposter/config"
 	"context"
 	"fmt"
-	"log"
+	"github.com/sirupsen/logrus"
 	"sync"
 	"time"
 	//"go.mongodb.org/mongo-driver/bson"
@@ -24,7 +24,7 @@ func (mongo *MongoDataStore) CreateDataStore(dbName string, connectionStr string
 	db, client := connect(dbName, connectionStr)
 
 	if db == nil && client == nil {
-		log.Fatal("Failed to connect to database")
+		logrus.Fatal("Failed to connect to database")
 	}
 
 	mongo.db = db
@@ -49,7 +49,7 @@ func connectToMongo(dbName string, connectionStr string) (*mongo.Database, *mong
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(connectionStr))
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -57,7 +57,7 @@ func connectToMongo(dbName string, connectionStr string) (*mongo.Database, *mong
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 
 	var db = client.Database(dbName)

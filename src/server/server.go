@@ -1,8 +1,7 @@
 package server
 
 import (
-	"fmt"
-	"log"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"time"
 )
@@ -22,10 +21,10 @@ func (s *Server) Run(port string, handler http.Handler) {
 		WriteTimeout:   10 * time.Second,
 	}
 
-	fmt.Printf("Server is running on :%s\n", port)
+	logrus.Printf("Server is running on :%s\n", port)
 
 	err := s.httpServer.ListenAndServe()
 	if err != nil {
-		log.Fatal(err)
+		logrus.Fatal(err)
 	}
 }
