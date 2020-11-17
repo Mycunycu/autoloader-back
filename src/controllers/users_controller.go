@@ -13,6 +13,7 @@ type test struct {
 
 // GetUsers - getting list all users
 func GetUsers(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
 	data := test{
 		Test:  1,
@@ -20,15 +21,18 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resp, err := json.Marshal(data)
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	fmt.Println(string(resp))
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(resp)
+
+	_, err = w.Write(resp)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 // CreateUser - creating a new user

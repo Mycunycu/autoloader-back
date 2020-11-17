@@ -1,20 +1,22 @@
 package routes
 
 import (
+	"autoposter/controllers"
 	"github.com/gin-gonic/gin"
 )
 
 // Router - ...
-type Router struct {}
+type Router struct{}
 
 // InitRouter - ...
 func (r *Router) InitRouter() *gin.Engine {
 	router := gin.New()
-	
-	auth := router.Group("/auth", ) 
+
+	authCtrl := new(controllers.AuthController)
+	auth := router.Group("/auth")
 	{
-		auth.POST("/sign-up",)
-		auth.POST("/sign-in",)
+		auth.POST("/signUp", authCtrl.SignUp)
+		auth.POST("/signIn", authCtrl.SignIn)
 	}
 
 	return router

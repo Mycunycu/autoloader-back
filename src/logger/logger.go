@@ -4,6 +4,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Init()  {
-	
+func Init() {
+
 }

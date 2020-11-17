@@ -2,12 +2,19 @@ package main
 
 import (
 	"autoposter/config"
+	"autoposter/mongodb"
+	"autoposter/routes"
 	"autoposter/server"
-	"autoposter/services/mongodb"
 )
 
 func main() {
 	config.InitEnv()
-	mongodb.CreateDataStore()
-	server.Run()
+	cfg := config.GetConfig()
+
+	mongoStore := new(mongodb.MongoDataStore)
+	mongoStore.CreateDataStore(cfg.DbName, cfg.MongoDbURL)
+
+	srv := new(server.Server)
+	router := new(routes.Router)
+	srv.Run(cfg.Port, router.InitRouter())
 }

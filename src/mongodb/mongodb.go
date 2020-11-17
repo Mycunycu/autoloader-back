@@ -20,38 +20,34 @@ type MongoDataStore struct {
 }
 
 // CreateDataStore - ...
-func CreateDataStore() *MongoDataStore {
-	var mongoDataStore *MongoDataStore
-	db, client := connect()
+func (mongo *MongoDataStore) CreateDataStore(dbName string, connectionStr string) {
+	db, client := connect(dbName, connectionStr)
 
 	if db == nil && client == nil {
 		log.Fatal("Failed to connect to database")
 	}
 
-	mongoDataStore = new(MongoDataStore)
-	mongoDataStore.db = db
-	mongoDataStore.Client = client
-
-	return mongoDataStore
+	mongo.db = db
+	mongo.Client = client
 }
 
-func connect() (*mongo.Database, *mongo.Client) {
+func connect(dbName string, connectionStr string) (*mongo.Database, *mongo.Client) {
 	var connectOnce sync.Once
 	var db *mongo.Database
 	var client *mongo.Client
 
 	connectOnce.Do(func() {
-		db, client = connectToMongo()
+		db, client = connectToMongo(dbName, connectionStr)
 	})
 
 	return db, client
 }
 
-func connectToMongo() (*mongo.Database, *mongo.Client) {
+func connectToMongo(dbName string, connectionStr string) (*mongo.Database, *mongo.Client) {
 	cfg := config.GetConfig()
 	var err error
 
-	client, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoDbURL))
+	client, err := mongo.NewClient(options.Client().ApplyURI(connectionStr))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -59,12 +55,12 @@ func connectToMongo() (*mongo.Database, *mongo.Client) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	client.Connect(ctx)
+	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var db = client.Database(cfg.DbName)
+	var db = client.Database(dbName)
 	fmt.Printf("Connected to DbName: %s\n", cfg.DbName)
 
 	return db, client
