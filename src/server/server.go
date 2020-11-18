@@ -14,7 +14,7 @@ type Server struct {
 // Run - ...
 func (s *Server) Run(port string, handler http.Handler) {
 	s.httpServer = &http.Server{
-		Addr:           port,
+		Addr:           ":" + port,
 		Handler:        handler,
 		MaxHeaderBytes: 1 << 20, //1Mb
 		ReadTimeout:    10 * time.Second,

@@ -1,16 +1,15 @@
 package mongodb
 
 import (
-	"autoposter/config"
 	"context"
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"sync"
 	"time"
 	//"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	//"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 // MongoDataStore - ...
@@ -44,7 +43,6 @@ func connect(dbName string, connectionStr string) (*mongo.Database, *mongo.Clien
 }
 
 func connectToMongo(dbName string, connectionStr string) (*mongo.Database, *mongo.Client) {
-	cfg := config.GetConfig()
 	var err error
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(connectionStr))
@@ -60,8 +58,13 @@ func connectToMongo(dbName string, connectionStr string) (*mongo.Database, *mong
 		logrus.Fatal(err)
 	}
 
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
 	var db = client.Database(dbName)
-	fmt.Printf("Connected to DbName: %s\n", cfg.DbName)
+	fmt.Printf("Connected to DbName: %s\n", dbName)
 
 	return db, client
 }
