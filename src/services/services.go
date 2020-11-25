@@ -1,7 +1,6 @@
 package services
 
 type Authorization interface {
-
 }
 
 type Services struct {
